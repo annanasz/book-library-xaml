@@ -1,0 +1,86 @@
+﻿<Page
+    x:Class="Library.Views.AuthorPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Library.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Library.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.DataContext>
+        <vm:AuthorPageViewModel x:Name="ViewModel"/>
+    </Page.DataContext>
+
+
+    <Page.Resources>
+        <Style TargetType="TextBlock" x:Key="TextBlockFont">
+            <Setter Property="FontFamily" Value="Goudy Old Style"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="TitleBlockFont" BasedOn="{StaticResource TextBlockFont}">
+            <Setter Property="FontSize" Value="40"/>
+        </Style>
+    </Page.Resources>
+    <ScrollViewer>
+        <Grid x:Name="ContentArea" Background="#d4c3ab">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="1100"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Border HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row ="0" Grid.Column="0" BorderThickness="5" CornerRadius="3" BorderBrush="Black" Height="350" Width="300" Margin="30">
+                    <Image HorizontalAlignment="Center" Grid.Row="2"  Source="{Binding Author.photo}"/>
+                </Border>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock HorizontalAlignment="Center" Margin="10" Style="{StaticResource TextBlockFont}">
+                    <Bold><Run Text="Links: "/></Bold>
+                    </TextBlock>
+                    <ItemsControl ItemsSource="{Binding Author.links}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Center" Margin="10" Style="{StaticResource TextBlockFont}">
+                                <Hyperlink Click="Hyperlink_Click" NavigateUri="{Binding url}"><Run Text="{Binding title}"/></Hyperlink>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left"  Grid.Row="0" Grid.Column="1" Margin="0,30,30,20" Grid.RowSpan="2">
+                <TextBlock Style="{StaticResource TitleBlockFont}" IsTextSelectionEnabled="True" Margin="0,30,30,20">
+                    <Bold><Run Text="{Binding Author.name}"/></Bold>
+                    <LineBreak/>
+                    <Run Text="{Binding Author.title}"/>
+                    <LineBreak/>
+                    <Run Text="{Binding Author.birth_date}"/>
+                    <Run Text=" - "/>
+                    <Run Text="{Binding Author.death_date}"/>
+                    <LineBreak/>
+                    <LineBreak/>
+                    <Bold><Run FontSize="20" Text="Bio:"/></Bold>
+                    <Run FontSize="20" Text="{Binding Author.bio}"/>
+                    <LineBreak/>
+                </TextBlock>
+                <TextBlock FontSize="20" HorizontalAlignment="Center" Margin="10" Style="{StaticResource TextBlockFont}">
+                    <Bold><Run Text="Alternate Names: "/></Bold>
+                </TextBlock>
+                <ItemsControl ItemsSource="{Binding Author.alternate_names}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="20"  HorizontalAlignment="Center" Margin="10" Style="{StaticResource TitleBlockFont}">
+                                <Run Text="{Binding}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>
